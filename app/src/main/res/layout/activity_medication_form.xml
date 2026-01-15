@@ -6,29 +6,29 @@
     android:orientation="vertical"
     android:id="@+id/main">
 
-    <EditText android:id="@+id/activity_student_form_name"
+    <EditText android:id="@+id/activity_medication_form_name"
         android:layout_width="match_parent"
         android:layout_margin="8dp"
         android:layout_height="wrap_content"
-        android:hint="Nome"
+        android:hint="Name"
         android:inputType="text"/>
 
-    <EditText android:id="@+id/activity_student_form_phone"
+    <EditText android:id="@+id/activity_medication_form_quantity"
         android:layout_width="match_parent"
         android:layout_margin="8dp"
         android:layout_height="wrap_content"
-        android:hint="Phone"
-        android:inputType="phone"/>
+        android:hint="Quantity"
+        android:inputType="number"/>
 
-    <EditText android:id="@+id/activity_student_form_email"
+    <EditText android:id="@+id/activity_medication_form_notes"
         android:layout_width="match_parent"
         android:layout_margin="8dp"
         android:layout_height="wrap_content"
-        android:hint="E-mail"
-        android:inputType="textEmailAddress"/>
+        android:hint="Notes"
+        android:inputType="text"/>
 
     <Button
-        android:id="@+id/activity_student_form_save_button"
+        android:id="@+id/activity_medication_form_save_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/student_overview"
+    android:id="@+id/medication_overview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,14 +14,14 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/overview_phone"
+        android:id="@+id/overview_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:layout_marginTop="8dp" />
 
     <TextView
-        android:id="@+id/overview_email"
+        android:id="@+id/overview_notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"

@@ -25,10 +25,10 @@ public class MedicationForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Add New Medication");
-        setContentView(R.layout.activity_student_form);
+        setContentView(R.layout.activity_medication_form);
         layoutConfig();
         fieldInitialization();
-        Button saveButton = findViewById(R.id.activity_student_form_save_button);
+        Button saveButton = findViewById(R.id.activity_medication_form_save_button);
         saveButton.setOnClickListener(v -> addMedication());
     }
 
@@ -50,9 +50,9 @@ public class MedicationForm extends AppCompatActivity {
     }
 
     private void fieldInitialization() {
-        capturedName = findViewById(R.id.activity_student_form_name);
-        capturedQuantity = findViewById(R.id.activity_student_form_phone);
-        capturedNotes = findViewById(R.id.activity_student_form_email);
+        capturedName = findViewById(R.id.activity_medication_form_name);
+        capturedQuantity = findViewById(R.id.activity_medication_form_quantity);
+        capturedNotes = findViewById(R.id.activity_medication_form_notes);
     }
         //METHOD BELOW NEEDS TO BE CHANGED IN FAVOR OF DATABASE
     private void saveMedicationList(Medication newMedication) { //Saves list between app sessions

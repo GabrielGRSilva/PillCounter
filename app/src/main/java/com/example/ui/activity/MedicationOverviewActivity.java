@@ -17,8 +17,8 @@ public class MedicationOverviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_student_overview);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.student_overview), (v, insets) -> {
+        setContentView(R.layout.activity_medication_overview);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.medication_overview), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -38,8 +38,8 @@ public class MedicationOverviewActivity extends AppCompatActivity {
         setTitle(medication.getName());
 
         TextView nameTextView = findViewById(R.id.overview_name);
-        TextView phoneTextView = findViewById(R.id.overview_phone);
-        TextView emailTextView = findViewById(R.id.overview_email);
+        TextView phoneTextView = findViewById(R.id.overview_quantity);
+        TextView emailTextView = findViewById(R.id.overview_notes);
 
         nameTextView.setText(medication.getName());
         phoneTextView.setText(medication.getQuantity());
