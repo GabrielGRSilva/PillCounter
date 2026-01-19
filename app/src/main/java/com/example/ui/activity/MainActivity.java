@@ -18,17 +18,19 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ActivityResultLauncher<Intent> addMedicationLauncher;
+    private ArrayList<Medication> medicationList = loadMedicationList();
+    private MedicationAdapter adapter = new MedicationAdapter(this, medicationList);
+    private static SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        java
-                // In MainActivity.java, inside onCreate()
-                addMedicationLauncher = registerForActivityResult(
+
+        sharedPreferences = getSharedPreferences("student_list_key", Context.MODE_PRIVATE);
+
+        ActivityResultLauncher<Intent> addMedicationLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == AppCompatActivity.RESULT_OK && result.getData() != null) {
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                         if (newMedication != null) {
                             // Add it to our main list and save
                             medicationList.add(newMedication);
-                            saveMedicationList(this, medicationList); // You'll need this method here now
+                            saveMedicationList(medicationList); // You'll need this method here now
                             adapter.notifyDataSetChanged(); // Tell the adapter to refresh the view
                         }
                     }
@@ -59,20 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.medication_recycler_view);
-
-        // Load the medication list from SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("StudentListApp", MODE_PRIVATE);
-        List<Medication> medicationList = MedicationForm.loadMedicationList(sharedPreferences);
-
-        MedicationAdapter adapter = new MedicationAdapter(this, medicationList);
         recyclerView.setAdapter(adapter);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private static void saveMedicationList(Context context, ArrayList<Medication> medicationList) {
+    public static void saveMedicationList(ArrayList<Medication> medicationList) {
         // Now it uses the context that was passed in to get SharedPreferences
-        SharedPreferences sharedPreferences = context.getSharedPreferences("StudentListApp", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         Gson gson = new Gson();
@@ -81,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("student_list_key", json);
         editor.apply();
     }
-    private static ArrayList<Medication> loadMedicationList(SharedPreferences sharedPreferences) {
+    private ArrayList<Medication> loadMedicationList() {
         Gson gson = new Gson();
         String json = sharedPreferences.getString("student_list_key", null);
 

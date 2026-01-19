@@ -12,13 +12,12 @@ import com.example.model.Medication;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.MedicationViewHolder> {
 
-    private final List<Medication> medicationList;
+    private final ArrayList<Medication> medicationList;
     private final Context context;
-    public MedicationAdapter(Context context, List<Medication> medicationList) {
+    public MedicationAdapter(Context context, ArrayList<Medication> medicationList) {
         this.context = context;
         this.medicationList = medicationList;
     }
@@ -45,7 +44,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         holder.fabAdd.setOnClickListener(v -> {
             medication.addOne(1); // Add 1 to the quantity in the Medication object
             holder.quantityTextView.setText(String.valueOf(medication.getQuantity())); // Update the quantity TextView immediately
-            saveMedications(); // Save the updated list to SharedPreferences
+            MainActivity.saveMedicationList(medicationList); // Save the updated list to SharedPreferences
         });
 
         // Sets the click listener for the red "remove" button
@@ -53,7 +52,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
             if (medication.getQuantity() > 0) { // Prevent quantity from going below zero
                 medication.removeOne(1); // Remove 1 from the quantity
                 holder.quantityTextView.setText(String.valueOf(medication.getQuantity())); // Update the TextView
-                saveMedications(); // Save the updated list
+                MainActivity.saveMedicationList(medicationList);; // Save the updated list
             }
         });
     }
@@ -78,10 +77,5 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
             fabAdd = itemView.findViewById(R.id.FABAdd1Med); // Use the correct ID for the add button
             fabRemove = itemView.findViewById(R.id.FABRem1Med); // Use the correct ID for the remove button
         }
-    }
-
-    // Helper method to save the entire list back to SharedPreferences
-    private void saveMedications() {
-        MainActivity.saveMedicationList(context, (ArrayList<Medication>) medicationList);
     }
 }
