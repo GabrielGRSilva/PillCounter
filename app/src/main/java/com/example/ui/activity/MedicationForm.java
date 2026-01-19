@@ -79,4 +79,10 @@ public class MedicationForm extends AppCompatActivity {
         }.getType();
         return gson.fromJson(json, type);
     }
+    public void addMed (SharedPreferences sharedPreferences) {
+
+    }
+    public void remMed (SharedPreferences sharedPreferences) {
+
+    }
 }

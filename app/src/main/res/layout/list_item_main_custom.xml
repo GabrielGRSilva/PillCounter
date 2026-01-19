@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -7,21 +8,54 @@
     <!-- Horizontal: Items side by side .
     Weight = 1 below forces first item to take all space, forcing the sub item to the right
     the android:text tags below are for preview and will be ignored while running-->
+
     <TextView
         android:id="@+id/text_view_main"
-        android:layout_width="0dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="Medication Name"
-        android:textSize="18sp"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/text_view_sub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
         android:text="Quantity"
-        android:textSize="14sp"
-        android:textColor="#666666" />
+        android:textColor="#666666"
+        android:textSize="18sp" />
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/FABAdd1Med"
+        android:layout_width="24dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="69dp"
+        android:clickable="true"
+        android:contentDescription="button to add one unit of this medicine"
+        app:backgroundTint="#31CA0F"
+        app:fabSize="auto"
+        app:srcCompat="@drawable/outline_add_24"
+        app:useCompatPadding="false" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/FABRemove1Med"
+        android:layout_width="24dp"
+        android:layout_height="27dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="false"
+        android:layout_marginEnd="9dp"
+        android:clickable="true"
+        android:contentDescription="button to remove one unit of this medicine"
+        app:backgroundTint="#F20404"
+        app:fabSize="auto"
+        app:srcCompat="?attr/editTextBackground" />
+
+</RelativeLayout>

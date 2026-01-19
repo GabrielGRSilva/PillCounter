@@ -8,12 +8,12 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_activity_lv1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/list_item_main_custom">
-    </ListView>
+        tools:listitem="@layout/list_item_main_custom"
+    />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton1"

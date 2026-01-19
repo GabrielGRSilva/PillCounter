@@ -27,20 +27,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){ //Ao reabrir a Activity, e não apenas onCreate
         super.onResume();
-        ListView studentList = findViewById(R.id.main_activity_lv1); //ListView de alunos
+        ListView medicineList = findViewById(R.id.main_activity_lv1); //ListView de alunos
         SharedPreferences sharedPreferences = getSharedPreferences("StudentListApp", MODE_PRIVATE);
-        studentList.setAdapter(new ArrayAdapter<>( //Adapter que conecta a ListView com a ArrayList, usando um layout padrão simple_list_item_1
+        medicineList.setAdapter(new ArrayAdapter<>( //Adapter que conecta a ListView com a ArrayList, usando um layout padrão simple_list_item_1
                 this,
                 android.R.layout.simple_list_item_1,
                 MedicationForm.loadMedicationList(sharedPreferences)));
 
-        //Ao clicar em estudante na lista, abre uma activity com seus dados
-        studentList.setOnItemClickListener((parent, view, position, id) -> {
+        //Ao clicar em medication na lista, abre uma activity com seus dados
+        medicineList.setOnItemClickListener((parent, view, position, id) -> {
             Medication clickedMedication = (Medication) parent.getItemAtPosition(position);
 
             Intent intent = new Intent(MainActivity.this, MedicationOverviewActivity.class);
              intent.putExtra("student", clickedMedication);
              startActivity(intent);
         });
+
+        FloatingActionButton fabAdd = findViewById(R.id.floatingActionButton1);
+        fabAdd.setOnClickListener(v -> MedicationForm.addMed);
+
+        FloatingActionButton fabRem = findViewById(R.id.floatingActionButton1);
+        fabRem.setOnClickListener(v -> MedicationForm.remMed);
     }
 }
