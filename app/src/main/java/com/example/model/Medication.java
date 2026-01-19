@@ -6,10 +6,10 @@ import androidx.annotation.NonNull;
 
 public class Medication implements Parcelable {
     private final String name;
-    private final String quantity;
+    private int quantity;
     private final String notes;
 
-    public Medication(String name, String quantity, String notes) {
+    public Medication(String name, int quantity, String notes) {
         this.name = name;
         this.quantity = quantity;
         this.notes = notes;
@@ -17,14 +17,14 @@ public class Medication implements Parcelable {
 
     protected Medication(Parcel in) {
         name = in.readString();
-        quantity = in.readString();
+        quantity = in.readInt();
         notes = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeString(quantity);
+        dest.writeInt(quantity);
         dest.writeString(notes);
     }
 
@@ -55,11 +55,18 @@ public class Medication implements Parcelable {
         return name;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
     public String getNotes() {
         return notes;
+    }
+
+    public void addOne(int quantity) {
+        this.quantity += quantity;
+    }
+    public void removeOne(int quantity) {
+        this.quantity -= quantity;
     }
 }

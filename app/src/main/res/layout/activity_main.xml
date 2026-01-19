@@ -8,6 +8,13 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+    <!-- adapter -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/medication_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/list_item_main_custom" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_activity_lv1"
         android:layout_width="match_parent"

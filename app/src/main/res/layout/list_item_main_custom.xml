@@ -46,7 +46,7 @@
         app:useCompatPadding="false" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/FABRemove1Med"
+        android:id="@+id/FABRem1Med"
         android:layout_width="24dp"
         android:layout_height="27dp"
         android:layout_alignParentEnd="true"

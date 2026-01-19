@@ -1,52 +1,96 @@
 package com.example.ui.activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
+
+import android.content.Context;
+import android.content.Intent;import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.aluramobile.R;
 import com.example.model.Medication;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private ActivityResultLauncher<Intent> addMedicationLauncher;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Student List");
-        setContentView(R.layout.activity_main);
-        SharedPreferences sharedPreferences = getSharedPreferences("StudentListApp", MODE_PRIVATE);
-        MedicationForm.loadMedicationList(sharedPreferences);
+        java
+                // In MainActivity.java, inside onCreate()
+                addMedicationLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == AppCompatActivity.RESULT_OK && result.getData() != null) {
+                        // The form sent back a new medication!
+                        Medication newMedication = (Medication) result.getData().getSerializableExtra("new_medication");
+                        if (newMedication != null) {
+                            // Add it to our main list and save
+                            medicationList.add(newMedication);
+                            saveMedicationList(this, medicationList); // You'll need this method here now
+                            adapter.notifyDataSetChanged(); // Tell the adapter to refresh the view
+                        }
+                    }
+                });
 
+        setTitle("Medication List");
+        setContentView(R.layout.activity_main);
+
+        // This FAB is for adding a NEW medication
         FloatingActionButton fab = findViewById(R.id.floatingActionButton1);
         fab.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, MedicationForm.class)));
     }
 
     @Override
-    protected void onResume(){ //Ao reabrir a Activity, e não apenas onCreate
+    protected void onResume() {
         super.onResume();
-        ListView medicineList = findViewById(R.id.main_activity_lv1); //ListView de alunos
+        setupRecyclerView();
+    }
+
+    private void setupRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.medication_recycler_view);
+
+        // Load the medication list from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("StudentListApp", MODE_PRIVATE);
-        medicineList.setAdapter(new ArrayAdapter<>( //Adapter que conecta a ListView com a ArrayList, usando um layout padrão simple_list_item_1
-                this,
-                android.R.layout.simple_list_item_1,
-                MedicationForm.loadMedicationList(sharedPreferences)));
+        List<Medication> medicationList = MedicationForm.loadMedicationList(sharedPreferences);
 
-        //Ao clicar em medication na lista, abre uma activity com seus dados
-        medicineList.setOnItemClickListener((parent, view, position, id) -> {
-            Medication clickedMedication = (Medication) parent.getItemAtPosition(position);
+        MedicationAdapter adapter = new MedicationAdapter(this, medicationList);
+        recyclerView.setAdapter(adapter);
 
-            Intent intent = new Intent(MainActivity.this, MedicationOverviewActivity.class);
-             intent.putExtra("student", clickedMedication);
-             startActivity(intent);
-        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 
-        FloatingActionButton fabAdd = findViewById(R.id.floatingActionButton1);
-        fabAdd.setOnClickListener(v -> MedicationForm.addMed);
+    private static void saveMedicationList(Context context, ArrayList<Medication> medicationList) {
+        // Now it uses the context that was passed in to get SharedPreferences
+        SharedPreferences sharedPreferences = context.getSharedPreferences("StudentListApp", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        FloatingActionButton fabRem = findViewById(R.id.floatingActionButton1);
-        fabRem.setOnClickListener(v -> MedicationForm.remMed);
+        Gson gson = new Gson();
+        String json = gson.toJson(medicationList); // Convert the whole list to JSON
+
+        editor.putString("student_list_key", json);
+        editor.apply();
+    }
+    private static ArrayList<Medication> loadMedicationList(SharedPreferences sharedPreferences) {
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("student_list_key", null);
+
+        if (json == null) {
+            return new ArrayList<>();
+        }
+
+        Type type = new TypeToken<ArrayList<Medication>>() {
+        }.getType();
+        return gson.fromJson(json, type);
     }
 }
