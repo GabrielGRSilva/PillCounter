@@ -20,37 +20,43 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<Medication> medicationList = loadMedicationList();
-    private MedicationAdapter adapter = new MedicationAdapter(this, medicationList);
+    private ArrayList<Medication> medicationList;
+    private MedicationAdapter adapter;
     private static SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        sharedPreferences = getSharedPreferences("student_list_key", Context.MODE_PRIVATE);
-
-        ActivityResultLauncher<Intent> addMedicationLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == AppCompatActivity.RESULT_OK && result.getData() != null) {
-                        // The form sent back a new medication!
-                        Medication newMedication = (Medication) result.getData().getSerializableExtra("new_medication");
-                        if (newMedication != null) {
-                            // Add it to our main list and save
-                            medicationList.add(newMedication);
-                            saveMedicationList(medicationList); // You'll need this method here now
-                            adapter.notifyDataSetChanged(); // Tell the adapter to refresh the view
-                        }
-                    }
-                });
-
-        setTitle("Medication List");
         setContentView(R.layout.activity_main);
+        setTitle("Medication List");
+
+        //DEBUGActivityResultLauncher<Intent> addMedLauncher = createAddMedLauncher();
 
         // This FAB is for adding a NEW medication
         FloatingActionButton fab = findViewById(R.id.floatingActionButton1);
         fab.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, MedicationForm.class)));
+
+        //Initialize list, adapter and SharedPreference, used by other parts of the program
+        sharedPreferences = getSharedPreferences("student_list_key", Context.MODE_PRIVATE);
+        medicationList = loadMedicationList();
+        adapter = new MedicationAdapter(this, medicationList);
+    }
+
+    private ActivityResultLauncher<Intent> createAddMedLauncher() {
+        return registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        result -> {
+            if (result.getResultCode() == AppCompatActivity.RESULT_OK && result.getData() != null) {
+                // The form sent back a new medication!
+                Medication newMedication = (Medication) result.getData().getSerializableExtra("new_medication");
+                if (newMedication != null) {
+                    // Add it to our main list and save
+                    medicationList.add(newMedication);
+                    saveMedicationList(medicationList); // You'll need this method here now
+                    //adapter.notifyDataSetChanged(); // Tell the adapter to refresh the view
+                }
+            }
+        });
     }
 
     @Override

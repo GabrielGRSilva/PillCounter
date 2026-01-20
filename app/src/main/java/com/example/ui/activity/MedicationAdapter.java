@@ -52,7 +52,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
             if (medication.getQuantity() > 0) { // Prevent quantity from going below zero
                 medication.removeOne(1); // Remove 1 from the quantity
                 holder.quantityTextView.setText(String.valueOf(medication.getQuantity())); // Update the TextView
-                MainActivity.saveMedicationList(medicationList);; // Save the updated list
+                MainActivity.saveMedicationList(medicationList); // Save the updated list
             }
         });
     }
