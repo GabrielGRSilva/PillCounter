@@ -47,11 +47,13 @@ public class MainActivity extends AppCompatActivity implements MedicationAdapter
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == AppCompatActivity.RESULT_OK && result.getData() != null) {
-                        Medication newMedication = (Medication) result.getData().getSerializableExtra("new_medication");
+                        Medication newMedication = result.getData().getParcelableExtra("new_medication");
                         if (newMedication != null) {
                             medicationList.add(newMedication);
                             saveMedicationList(medicationList);
                             adapter.notifyDataSetChanged();
+                        } else{
+                            System.out.println("Med is null!");
                         }
                     }
                 });

@@ -83,8 +83,8 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         public MedicationViewHolder(@NonNull View itemView) {
             super(itemView);
             // Find all the views from your list item XML file
-            nameTextView = itemView.findViewById(R.id.activity_medication_form_name);
-            quantityTextView = itemView.findViewById(R.id.activity_medication_form_quantity);
+            nameTextView = itemView.findViewById(R.id.text_view_name);
+            quantityTextView = itemView.findViewById(R.id.text_view_quantity);
             fabAdd = itemView.findViewById(R.id.FABAdd1Med);
             fabRemove = itemView.findViewById(R.id.FABRem1Med);
         }

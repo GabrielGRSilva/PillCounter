@@ -10,7 +10,7 @@
     the android:text tags below are for preview and will be ignored while running-->
 
     <TextView
-        android:id="@+id/text_view_main"
+        android:id="@+id/text_view_name"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Medication Name"
@@ -18,7 +18,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/text_view_sub"
+        android:id="@+id/text_view_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="false"
@@ -33,28 +33,28 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FABAdd1Med"
-        android:layout_width="24dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="69dp"
         android:clickable="true"
         android:contentDescription="button to add one unit of this medicine"
         app:backgroundTint="#31CA0F"
-        app:fabSize="auto"
+        app:fabSize="mini"
         app:srcCompat="@drawable/outline_add_24"
         app:useCompatPadding="false" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FABRem1Med"
-        android:layout_width="24dp"
-        android:layout_height="27dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="false"
         android:layout_marginEnd="9dp"
         android:clickable="true"
         android:contentDescription="button to remove one unit of this medicine"
         app:backgroundTint="#F20404"
-        app:fabSize="auto"
+        app:fabSize="mini"
         app:srcCompat="?attr/editTextBackground" />
 
 </RelativeLayout>
