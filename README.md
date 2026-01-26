@@ -6,7 +6,7 @@ This is an Android app to track medications and pills you take, allowing you to 
 
 This is an official upgrade from the CLI Python version of this application (https://github.com/GabrielGRSilva/PC-Pill-Counter).
 
-##INSTALATION
+## INSTALATION
 
 Just run the APK. You may need to set up the permission to install apps from APK files on your Android phone.
 
