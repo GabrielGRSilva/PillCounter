@@ -17,9 +17,16 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
 
     private final ArrayList<Medication> medicationList;
     private final Context context;
+    private final OnMedicationChangedListener listener; // <<< 1. Add this field
+
     public MedicationAdapter(Context context, ArrayList<Medication> medicationList) {
         this.context = context;
         this.medicationList = medicationList;
+        if (context instanceof OnMedicationChangedListener) {
+            this.listener = (OnMedicationChangedListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement OnMedicationChangedListener");
+        }
     }
 
     // This method creates the view for each list item from your XML layout
@@ -44,7 +51,9 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         holder.fabAdd.setOnClickListener(v -> {
             medication.addOne(1); // Add 1 to the quantity in the Medication object
             holder.quantityTextView.setText(String.valueOf(medication.getQuantity())); // Update the quantity TextView immediately
-            MainActivity.saveMedicationList(medicationList); // Save the updated list to SharedPreferences
+            if (listener != null) {
+                listener.onMedicationDataChanged();
+            } // Save the updated list to SharedPreferences
         });
 
         // Sets the click listener for the red "remove" button
@@ -52,7 +61,9 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
             if (medication.getQuantity() > 0) { // Prevent quantity from going below zero
                 medication.removeOne(1); // Remove 1 from the quantity
                 holder.quantityTextView.setText(String.valueOf(medication.getQuantity())); // Update the TextView
-                MainActivity.saveMedicationList(medicationList); // Save the updated list
+                if (listener != null) {
+                    listener.onMedicationDataChanged();
+                } // Save the updated list
             }
         });
     }
@@ -72,10 +83,13 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         public MedicationViewHolder(@NonNull View itemView) {
             super(itemView);
             // Find all the views from your list item XML file
-            nameTextView = itemView.findViewById(R.id.activity_medication_form_name); // Use the correct ID from your XML
-            quantityTextView = itemView.findViewById(R.id.activity_medication_form_quantity); // Use the correct ID from your XML
-            fabAdd = itemView.findViewById(R.id.FABAdd1Med); // Use the correct ID for the add button
-            fabRemove = itemView.findViewById(R.id.FABRem1Med); // Use the correct ID for the remove button
+            nameTextView = itemView.findViewById(R.id.activity_medication_form_name);
+            quantityTextView = itemView.findViewById(R.id.activity_medication_form_quantity);
+            fabAdd = itemView.findViewById(R.id.FABAdd1Med);
+            fabRemove = itemView.findViewById(R.id.FABRem1Med);
         }
+    }
+    public interface OnMedicationChangedListener {
+        void onMedicationDataChanged();
     }
 }
