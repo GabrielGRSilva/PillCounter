@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Student List Companion</string>
-    <string name="fab1desc">Button to add more students</string>
+    <string name="app_name">Pill Counter</string>
+    <string name="fab1desc">Button to add more medications</string>
 </resources>
